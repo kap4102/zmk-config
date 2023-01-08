@@ -11,12 +11,13 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
 
 /* Layers */
 #define DEV 0
-#define SYM 1
-#define NAV 2
+#define NAV 1
 #define NUM 3
+#define NUMP 4
 
 &caps_word {
     continue-list = <UNDERSCORE MINUS SPACE>;
@@ -85,16 +86,6 @@ hr: left_hand_positional_hold_tap {
             bindings = <&kp>, <&kp>;
             hold-trigger-key-positions = <5 6 7 8 9 10>;    // <---[[right-hand keys]]
         };
-rh: right_hand_positional_hold_tap {
-            compatible = "zmk,behavior-hold-tap";
-            label = "RIGHT_POSITIONAL_HOLD_TAP";
-            #binding-cells = <2>;
-            flavor = "tap-unless-interrupted";
-            tapping-term-ms = <100>;                        // <---[[produces tap if held longer than tapping-term-ms]]
-            quick-tap-ms = <200>;
-            bindings = <&kp>, <&kp>;
-            hold-trigger-key-positions = <5 6 7 8 9 10>;    // <---[[right-hand keys]]
-        };
 };
 
 / {
@@ -110,7 +101,7 @@ rh: right_hand_positional_hold_tap {
         // ├──────────────────┼──────────┼──────────┼─────────────┼────────────┼─────────────┤   ├─────────────┼─────────────┼──────────────┼───────────┼────────────┼──────────────────┤
               &mt LKBT LPAR                 &kp Z             &kp X            &kp C                  &kp V               &kp B                      &kp N                  &kp M                  &tp_comma               &tp_dot            &tp_fslh            &mt RKBT RPAR
         // ╰──────────────────┴──────────┴──────────┴─────────────┼────────────┼─────────────┤   ├─────────────┼─────────────┼──────────────┴───────────┴────────────┴──────────────────╯
-                                                                                &kp_ESCAPE            &kp_SPACE            &kp_RET                   &kp_TAB                &kp_SPACE              &mt kp_BKSP DEL
+                                                                                &ltu NUMP ESCAPE     &hr LSHFT SPACE     &lt NAV RET                 &lt NAV TAB           &hr LSHFT SPACE         &lt NUM &mt BKSP DEL
         //                                                                   ╰─────────────┴────────────┴─────────────╯   ╰─────────────┴─────────────┴──────────────╯
       >;
     };
@@ -118,7 +109,7 @@ rh: right_hand_positional_hold_tap {
       label = "nav;
       bindings = <
         // ╭──────────────────┬──────────┬──────────┬─────────────┬────────────┬─────────────╮   ╭─────────────┬─────────────┬──────────────┬───────────┬────────────┬──────────────────╮
-              &kp RBKT                      &kp Q             &kp W            &kp E                  &kp R               &kp CAPS                    &lt CAPS              &tpPG_UP               &kp HOME               &kp SYSREQ         &kp SLCK             &kp PAUSE_BREAK
+              &kp RBKT                      &bt BT_CLR             &bt BT_NXT            &bt BT_PRV                  &out OUT_TOG               &kp CAPS                    &lt CAPS              &tpPG_UP               &kp HOME               &kp SYSREQ         &kp SLCK             &kp PAUSE_BREAK
         // ├──────────────────┼──────────┼──────────┼─────────────┼────────────┼─────────────┤   ├─────────────┼─────────────┼──────────────┼───────────┼────────────┼──────────────────┤
               &kp NUBS                      &hr LWIN A        &hr LALT S       &hr LSHIFT D           &hr LCTRL F         &hr RALT G                  &kp K_APP             &kp LEFT               &kp DOWN               &kp UP             &kp RIGHT            &kp SQT
         // ├──────────────────┼──────────┼──────────┼─────────────┼────────────┼─────────────┤   ├─────────────┼─────────────┼──────────────┼───────────┼────────────┼──────────────────┤
